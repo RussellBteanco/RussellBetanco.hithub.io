@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="MODIFICAR.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Producto</title>
+    <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+    max-width: 500px;
+    width: 100%;
+    background: #fff;
+    padding: 45px;
+    border-radius: 7px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+        h2 {
+            color: #fff;
+            background-color: #007BFF;
+            padding: 20px;
+            border-radius: 8px 8px 0 0;
+            margin: 0;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            text-align: left;
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,123,255,0.2);
+        }
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        #suggestions {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            max-height: 150px;
+            overflow-y: auto;
+            position: absolute;
+            width: calc(100% - 22px);
+            border-radius: 4px;
+            z-index: 10;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        #suggestions div {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+        #suggestions div:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+    <script>
+        function showSuggestions(value) {
+            if (value.length === 0) {
+                document.getElementById("suggestions").innerHTML = "";
+                return;
+            }
+            //CODIGOA UTILIZAR PARA CODIGO ELIMINAR
+            fetch('ENCONTRAR.php?q=' + encodeURIComponent(value))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        let item = data[0]; // Solo el primer (último) producto
+                        selectSuggestion(item.nombre, item.cantidad, item.descuento, item.impuesto, item.total);
+                    } else {
+                        document.getElementById("suggestions").innerHTML = "";
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function selectSuggestion(nombre, cantidad, descuento, impuesto, total) {
+            document.getElementById("nombre").value = nombre || '';
+            document.getElementById("cantidad").value = cantidad || '';
+            document.getElementById("descuento").value = descuento || '';
+            document.getElementById("impuesto").value = impuesto || '';
+            document.getElementById("total").value = total || '';
+
+            // Obtener el precio de otra tabla
+            fetch('OBTENER_PRECIO.php?nombre=' + encodeURIComponent(nombre))
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("precio").value = data.precio || '';
+                    calcularValores();  // Recalcular los valores una vez obtenido el precio
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function calcularValores() {
+            // Obtener valores del formulario
+            var cantidad = parseFloat(document.getElementById("cantidad").value);
+            var precio = parseFloat(document.getElementById("precio").value);
+
+            // Calcular descuento
+            var descuento = cantidad >= 10 ? 10 : 5;
+            var precioDescuento = precio - (precio * descuento / 100);
+
+            // Calcular impuesto
+            var impuesto = 0.16;  // 16% de impuesto
+            var montoImpuesto = precioDescuento * impuesto;
+
+            // Calcular precio final y total
+            var precioFinal = precioDescuento + montoImpuesto;
+            var total = precioFinal * cantidad;
+
+            // Actualizar los campos en el formulario
+            document.getElementById("descuento").value = descuento;
+            document.getElementById("impuesto").value = montoImpuesto.toFixed(2);
+            document.getElementById("total").value = total.toFixed(2);
+        }
+    </script>
+</head>
+<body>
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+    <div class="section"></div>
+    <div class="container">
+        <h2>Modificar Producto</h2>
+        <form action="modificar.php" method="post">
+            <label for="nombre">Nombre del Producto:</label>
+            <input type="text" id="nombre" name="nombre" onkeyup="showSuggestions(this.value)" required autocomplete="off">
+            <div id="suggestions"></div>
+
+            <label for="precio">Precio:</label>
+            <input type="text" id="precio" name="precio" readonly>
+
+            <label for="cantidad">Cantidad:</label>
+            <input type="text" id="cantidad" name="cantidad" oninput="calcularValores()" required>
+
+            <label for="descuento">Descuento:</label>
+            <input type="text" id="descuento" name="descuento" readonly>
+
+            <label for="impuesto">Impuesto:</label>
+            <input type="text" id="impuesto" name="impuesto" readonly>
+
+            <label for="total">Total:</label>
+            <input type="text" id="total" name="total" readonly>
+
+            <input type="submit" value="Modificar Producto">
+        </form>
+    </div>
+</body>
+</html>

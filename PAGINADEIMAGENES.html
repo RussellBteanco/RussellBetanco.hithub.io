@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Imágenes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #9393c1; /* Fondo azul */
+            padding: 20px;
+        }
+        h1 {
+            color: #FFFFFF; /* Letras en blanco */
+            text-align: center;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .gallery-item {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .gallery-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .gallery-item p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #333;
+        }
+        .gallery-item button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .gallery-item button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Planetas a Escala</h1>
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="IMAGENES/percivallowellmarsglobe6inch_360x.webp" alt="Imagen 1">
+            <p>Globo terráqueo de Marte de Percival Lowell - 6 pulgadas <br>L 755.00 </p>
+            <button onclick="window.location.href='http://localhost/PROYECTOFINAL/AGREGAR.HTML'">Comprar</button>
+        </div>
+        <div class="gallery-item">
+            <img src="IMAGENES/89137_magic_360x.webp" alt="Imagen 2">
+            <p>Globo de Urano<br>L 754.00</p>
+            <button onclick="window.location.href='http://localhost/PROYECTOFINAL/AGREGAR.HTML'">Comprar</button>
+        </div>
+        <div class="gallery-item">
+            <img src="IMAGENES/81678csmall-500_360x.webp" alt="Imagen 3">
+            <p>Globo terráqueo de Saturno - 6 pulgadas<br>L 1,258.00</p>
+            <button onclick="window.location.href='http://localhost/PROYECTOFINAL/AGREGAR.HTML'">Comprar</button>
+        </div>
+        <div class="gallery-item">
+            <img src="IMAGENES/plutoglobe6inch_360x.webp" alt="Imagen 4">
+            <p>Globo de Plutón<br>L 754.00</p>
+            <button onclick="window.location.href='http://localhost/PROYECTOFINAL/AGREGAR.HTML'">Comprar</button>
+        </div>
+        <div class="gallery-item">
+            <img src="IMAGENES/Earth_6_globe_1-removebg-preview_360x.webp" alt="Imagen 5">
+            <p>Globo terráqueo<br>L 754.00</p>
+            <button onclick="window.location.href='http://localhost/PROYECTOFINAL/AGREGAR.HTML'">Comprar</button>
+        </div>
+        <div class="gallery-item">
+            <img src="IMAGENES/marsglobe12inch_360x.webp" alt="Imagen 6">
+            <p>Globo terráqueo de Marte - 12 pulgadas<br>L 2,516.00</p>
+            <button onclick="window.location.href='http://localhost/PROYECTOFINAL/AGREGAR.HTML'">Comprar</button>
+        </div>
+        <div class="gallery-item">
+            <img src="IMAGENES/mercuryglobe_360x.webp" alt="Imagen 7">
+            <p>Globo de Mercurio<br>L 2,768.00</p>
+            <button onclick="window.location.href='http://localhost/PROYECTOFINAL/AGREGAR.HTML'">Comprar</button>
+        </div>
+        <div class="gallery-item">
+            <img src="IMAGENES/moon6inch_360x.webp" alt="Imagen 8">
+            <p>Globo lunar - 6 pulgadas<br>L 754.00</p>
+            <button onclick="window.location.href='http://localhost/PROYECTOFINAL/AGREGAR.HTML'">Comprar</button>
+        </div>
+        <div class="gallery-item">
+            <img src="IMAGENES/moon12inch_1_360x.webp" alt="Imagen 9">
+            <p>Globo lunar - 12 pulgadas<br>L 2,516.00</p>
+            <button onclick="window.location.href='http://localhost/PROYECTOFINAL/AGREGAR.HTML'">Comprar</button>
+        </div>
+        <div class="gallery-item">
+            <img src="IMAGENES/jupiter6inch_360x.webp" alt="Imagen 10">
+            <p>Globo terráqueo de Júpiter - 6 pulgadas<br>L 754.00</p>
+            <button onclick="window.location.href='http://localhost/PROYECTOFINAL/AGREGAR.HTML'">Comprar</button>
+        </div>
+    </div>
+</body>
+</html>
